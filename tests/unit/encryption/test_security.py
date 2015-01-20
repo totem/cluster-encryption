@@ -109,10 +109,48 @@ r0fOR/daLpuwIIb01eiN37fUILdbM6CfHE5wjt/YfW0Pq3eIum/LrHHJv3nJlPVL
         decrypted = security.decrypt_obj(encrypted, store=self.store)
 
         # Then: Original dictionary is returned
-        print(encrypted)
         dict_compare(decrypted, {
             'key1': 'value1',
             'key2': 'value2',
             'key3': ['value3.1', 'value3.2'],
             'key4': 'value4'
+        })
+
+    def test_encrypt_with_non_existing_profile(self):
+
+        data = {
+            'key1': 'value1',
+            'key2': 'value2'
+        }
+
+        # When: I encrypt the dictionary
+        encrypted = security.encrypt_obj(data)
+
+        # Then: Values are not encrypted
+        dict_compare(encrypted, {
+            'key1': {
+                'value': 'value1',
+                'encrypted': True
+            },
+            'key2': {
+                'value': 'value2',
+                'encrypted': True
+            },
+        })
+
+    def test_decrypt_with_non_existing_profile(self):
+
+        data = {
+            'key1': {
+                'value': 'value1',
+                'encrypted': True
+            }
+        }
+
+        # When: I decrypt the dictionary
+        decrypted = security.decrypt_obj(data)
+
+        # Then: Values are not decrypted
+        dict_compare(decrypted, {
+            'key1': 'value1'
         })

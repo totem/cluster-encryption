@@ -20,8 +20,8 @@ class InMemoryProvider(AbstractProvider):
         if key_path in self._store:
             return self._store[key_path]
         else:
-            raise ValueError('Profile: %s with public:%s could not be found' %
-                             (profile, public))
+            # No encryption supported
+            return None
 
     def delete(self, profile):
         for public in [True, False]:

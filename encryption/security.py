@@ -57,12 +57,18 @@ def _decrypt_value(key, enc_value):
 
 def _create_enc_key(profile, store):
     key_data = store.load(profile)
-    return PKCS1_v1_5.new(RSA.importKey(key_data))
+    if key_data:
+        return PKCS1_v1_5.new(RSA.importKey(key_data))
+    else:
+        return None
 
 
 def _create_dec_key(profile, store, passphrase=None):
     key_data = store.load(profile, public=False)
-    return PKCS1_v1_5.new(RSA.importKey(key_data, passphrase=passphrase))
+    if key_data:
+        return PKCS1_v1_5.new(RSA.importKey(key_data, passphrase=passphrase))
+    else:
+        return None
 
 
 def encrypt(value, profile=DEFAULT_PROFILE, store=DEFAULT_STORE,
@@ -81,7 +87,11 @@ def encrypt(value, profile=DEFAULT_PROFILE, store=DEFAULT_STORE,
     :rtype: str or dict
     """
     key = key or _create_enc_key(profile, store)
-    return _encrypt_value(key, value, chunk_size=chunk_size)
+    if key:
+        return _encrypt_value(key, value, chunk_size=chunk_size)
+    else:
+        # No encryption support
+        return value
 
 
 def decrypt(value, profile=DEFAULT_PROFILE, store=DEFAULT_STORE,
@@ -103,7 +113,11 @@ def decrypt(value, profile=DEFAULT_PROFILE, store=DEFAULT_STORE,
     :rtype: str
     """
     key = key or _create_dec_key(profile, store, passphrase=passphrase)
-    return _decrypt_value(key, value)
+    if key:
+        return _decrypt_value(key, value)
+    else:
+        # No decryption support
+        return value
 
 
 def encrypt_obj(value, profile=DEFAULT_PROFILE, store=DEFAULT_STORE,
