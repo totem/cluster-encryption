@@ -55,7 +55,8 @@ def _decrypt_value(key, enc_value):
     return clear_val
 
 
-def _create_enc_key(profile, store):
+def _create_enc_key(profile, store=None):
+    store = store or DEFAULT_STORE
     key_data = store.load(profile)
     if key_data:
         return PKCS1_v1_5.new(RSA.importKey(key_data))
@@ -63,7 +64,8 @@ def _create_enc_key(profile, store):
         return None
 
 
-def _create_dec_key(profile, store, passphrase=None):
+def _create_dec_key(profile, store=None, passphrase=None):
+    store = store or DEFAULT_STORE
     key_data = store.load(profile, public=False)
     if key_data:
         return PKCS1_v1_5.new(RSA.importKey(key_data, passphrase=passphrase))
