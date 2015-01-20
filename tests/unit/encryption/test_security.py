@@ -96,12 +96,23 @@ r0fOR/daLpuwIIb01eiN37fUILdbM6CfHE5wjt/YfW0Pq3eIum/LrHHJv3nJlPVL
         # Given: Dictionary with values that needs to be encrypted
         data = {
             'key1': 'value1',
-            'key2': 'value2'
+            'key2': 'value2',
+            'key3': ['value3.1', 'value3.2'],
+            'key4': {
+                'encrypted': False,
+                'value': 'value4'
+            }
         }
 
         # When: I encrypt and decrypt the dictionary
-        encrypted = security.encrypt(data, store=self.store)
-        decrypted = security.decrypt(encrypted, store=self.store)
+        encrypted = security.encrypt_obj(data, store=self.store)
+        decrypted = security.decrypt_obj(encrypted, store=self.store)
 
         # Then: Original dictionary is returned
-        dict_compare(decrypted, data)
+        print(encrypted)
+        dict_compare(decrypted, {
+            'key1': 'value1',
+            'key2': 'value2',
+            'key3': ['value3.1', 'value3.2'],
+            'key4': 'value4'
+        })
