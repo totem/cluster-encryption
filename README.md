@@ -1,4 +1,4 @@
-# cluster-encryption
+# totem-encrypt [![Build Status](https://travis-ci.org/totem/totem-encrypt.svg)](https://travis-ci.org/totem/totem-encrypt) [![Coverage Status](https://coveralls.io/repos/totem/totem-encrypt/badge.svg)](https://coveralls.io/r/totem/totem-encrypt)
 Python library for encryption/decryption in totem
 
 It uses asymmetric cryptography using PKCS#1 v1.5.
