@@ -189,7 +189,7 @@ def decrypt_obj(value, profile=DEFAULT_PROFILE, store=DEFAULT_STORE,
     if hasattr(value, 'items'):
         if 'value' in value:
             if value.get('encrypted', False) and \
-                    isinstance(value['value'], str):
+                    isinstance(value['value'], (basestring,)):
                 return decrypt(value['value'], profile=profile, store=store,
                                passphrase=passphrase, key=key)
             else:
