@@ -8,7 +8,7 @@ setup(
     version="0.1.0",
     description="Encryption library used for totem",
     author='Sukrit Khera',
-    packages=['encryption'],
+    packages=['encryption', 'encryption.store'],
     install_requires=requirements,
     zip_safe=True,
     test_suite='tests',
